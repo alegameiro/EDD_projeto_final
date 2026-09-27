@@ -6,7 +6,7 @@ def carregar_cidades(nome_arquivo="cidades_vizinhas.csv"):
     try:
         # Lendo o arquivo CSV
         with open(nome_arquivo, mode='r', encoding='utf-8') as arquivo:
-            leitor = csv.reader(arquivo, delimiter=',') 
+            leitor = csv.reader(arquivo, delimiter=';') 
             for linha in leitor:
                 if len(linha) >= 2:
                     cidades_unicas.add(linha[0].strip())

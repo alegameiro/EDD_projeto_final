@@ -1,5 +1,5 @@
 #--------------------------------------------------------
-#              NÓ E LISTA ENCADEADA
+#              LISTA ENCADEADA
 #--------------------------------------------------------
 class No:
     def __init__(self, nome, idade, telefone, cidade):
@@ -41,8 +41,9 @@ class ListaEncadeada:
     def obter_tamanho(self):
         return self.tamanho
 
+
 #--------------------------------------------------------
-#          NÓ ÁRVORE E BUSCA BINÁRIA
+#          ÁRVORE E BUSCA BINÁRIA
 #--------------------------------------------------------
 class NoArvore:
     def __init__(self, nome, idade, telefone, cidade):
@@ -140,3 +141,66 @@ class ArvoreBinariaBusca:
             no.direita, _ = self._remover_recursivo(no.direita, sucessor.nome)
 
         return no, removido
+
+
+#--------------------------------------------------------
+#                   GRAFO
+#--------------------------------------------------------
+import heapq
+
+class Grafo:
+    def __init__(self):
+        # Usaremos um dicionário de adjacências
+        self.adjacencias = {}
+
+    def adicionar_aresta(self, u, v, peso):
+        if u not in self.adjacencias:
+            self.adjacencias[u] = []
+        if v not in self.adjacencias:
+            self.adjacencias[v] = []
+        
+        # Como é não-direcionado, a aresta vai para ambos os lados
+        self.adjacencias[u].append((v, peso))
+        self.adjacencias[v].append((u, peso))
+
+    def dijkstra(self, origem):
+        """
+        Retorna dois dicionários: as distâncias mínimas da origem para todos os vértices
+        e o dicionário de caminhos (para reconstruir a rota).
+        """
+        distancias = {vertice: float('inf') for vertice in self.adjacencias}
+        distancias[origem] = 0
+        caminho_anterior = {vertice: None for vertice in self.adjacencias}
+        
+        # Fila de prioridade armazena tuplas (distancia_acumulada, vertice_atual)
+        pq = [(0, origem)]
+
+        while pq:
+            dist_atual, vertice_atual = heapq.heappop(pq)
+
+            # Se a distância atual for maior que a registrada, ignoramos (caminho obsoleto)
+            if dist_atual > distancias[vertice_atual]:
+                continue
+
+            for vizinho, peso in self.adjacencias[vertice_atual]:
+                distancia = dist_atual + peso
+                
+                # Se encontramos um caminho mais curto para o vizinho
+                if distancia < distancias[vizinho]:
+                    distancias[vizinho] = distancia
+                    caminho_anterior[vizinho] = vertice_atual
+                    heapq.heappush(pq, (distancia, vizinho))
+                    
+        return distancias, caminho_anterior
+
+    def reconstruir_caminho(self, caminho_anterior, origem, destino):
+        caminho = []
+        atual = destino
+        while atual is not None:
+            caminho.append(atual)
+            if atual == origem:
+                break
+            atual = caminho_anterior[atual]
+            
+        caminho.reverse() # Inverte para ficar da origem ao destino
+        return caminho

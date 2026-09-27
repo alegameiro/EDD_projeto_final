@@ -1,6 +1,7 @@
 from estruturas_de_dados import ListaEncadeada
 import atribuicoes_secretario as sec
 import atribuicoes_diretor as dir
+import atribuicoes_assistente as ass
 
 def main():
     # 1. Inicializa a estrutura
@@ -70,6 +71,39 @@ def main():
         else:
             print("Opção inválida. Digite um número de 1 a 5.")
         print() 
+
+    
+    # ======================================================
+    # TRANSIÇÃO: PREPARAR O GRAFO
+    # ======================================================
+    grafo_cidades = ass.carregar_grafo("cidades_vizinhas.csv")
+
+    # ======================================================
+    # PERFIL 3: ASSISTENTE
+    # ======================================================
+    print("\n-------- Olá, Assistente! --------\n")
+    
+    while True:
+        print("Você deseja:")
+        print("(1) Ver a menor distância entre a cidade da escola e a cidade de uma pessoa.")
+        print("(2) Ver a menor distância da cidade da escola até a cidade da pessoa passando por uma cidade específica.")
+        print("(3) Ver dados da(s) pessoa(s) que mora(m) na cidade mais perto da cidade da escola (incluindo distância).")
+        print("(4) Finalizar execução.")
+        
+        opcao = input("Digite sua opção: ")
+        
+        if opcao == '1':
+            ass.acao_menor_distancia_pessoa(arvore_de_espera, grafo_cidades)
+        elif opcao == '2':
+            ass.acao_menor_distancia_indaiatuba(arvore_de_espera, grafo_cidades)
+        elif opcao == '3':
+            ass.acao_cidade_mais_proxima(arvore_de_espera, grafo_cidades)
+        elif opcao == '4':
+            print("Fim da execução do sistema.")
+            break
+        else:
+            print("Opção inválida. Digite um número de 1 a 4.")
+        print()
 
 if __name__ == "__main__":
     main()
