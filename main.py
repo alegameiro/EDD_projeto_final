@@ -1,5 +1,6 @@
 from estruturas_de_dados import ListaEncadeada
 import atribuicoes_secretario as sec
+import atribuicoes_diretor as dir
 
 def main():
     # 1. Inicializa a estrutura
@@ -33,6 +34,41 @@ def main():
             break
         else:
             print("Opção inválida. Digite um número de 1 a 4.")
+        print()
+
+    # ======================================================
+    # TRANSIÇÃO: CONVERTER LISTA PARA ÁRVORE BINÁRIA
+    # ======================================================
+    arvore_de_espera = dir.converter_lista_para_arvore(lista_de_espera)
+
+    # ======================================================
+    # PERFIL 2: DIRETOR(A)
+    # ======================================================
+    print("\n-------- Olá, Diretor(a)! --------\n")
+    
+    while True:
+        print("Você deseja:")
+        print("(1) Alterar nome, idade ou telefone de pessoa cadastrada.")
+        print("(2) Descadastrar pessoa.")
+        print("(3) Obter informações da primeira pessoa em ordem alfabética de nome.")
+        print("(4) Obter informações da última pessoa em ordem alfabética de nome.")
+        print("(5) Confirmar validade da lista de espera e finalizar execução.")
+        
+        opcao = input("Digite sua opção: ")
+        
+        if opcao == '1':
+            dir.acao_alterar_dados(arvore_de_espera)
+        elif opcao == '2':
+            dir.acao_descadastrar(arvore_de_espera)
+        elif opcao == '3':
+            dir.acao_primeiro_alfabetico(arvore_de_espera)
+        elif opcao == '4':
+            dir.acao_ultimo_alfabetico(arvore_de_espera)
+        elif opcao == '5':
+            print("Fim das atividades sob responsabilidade do(a) Diretor(a).\n")
+            break
+        else:
+            print("Opção inválida. Digite um número de 1 a 5.")
         print() 
 
 if __name__ == "__main__":
